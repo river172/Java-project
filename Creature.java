@@ -1,2 +1,2 @@
-public class Creature extends displayable{
+public class Creature extends Displayable{
  }

@@ -1,22 +1,22 @@
 public class Dungeon{
     
-    getDungeon(string name, int width, int gameHeight){
+    public void getDungeon(string name, int width, int gameHeight){
         System.out.println("Get dungeon");
     }
     
-    addRoom(Room room){
+    public void addRoom(Room room){
         System.out.println("addRoom");
         }
     
-    addCreature(Creature creature){
+    public void addCreature(Creature creature){
         System.out.println("addCreature");
         }
     
-    addPassage(Passage passage){
+    public void addPassage(Passage passage){
         System.out.println("addPassage");
         }
     
-        addItem(Item item){
+        public void addItem(Item item){
         System.out.println("addItem");
         }
 }

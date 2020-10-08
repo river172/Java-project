@@ -1,10 +1,10 @@
 public class ObjectDisplayGrid{
 
-  getObjectDisplayGrid(int gameHeight, int width, int topHeight) {
+  public void getObjectDisplayGrid(int gameHeight, int width, int topHeight) {
     System.out.println("getObjectDisplayGrid");
   }
   
-   setTopMessageHeight(int topHeight){
+   public void setTopMessageHeight(int topHeight){
     System.out.println("setTopMessageHeight");
     }
     

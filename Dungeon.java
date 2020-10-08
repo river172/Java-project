@@ -1,21 +1,23 @@
-public class LongList implements MyList{
-    long data;
-    LongList next;
-    public LongList(LongList n, long data){
-        this.data = data;
-        next = n;
-
+public class Dungeon{
+    
+    getDungeon(string name, int width, int gameHeight){
+        System.out.println("Get dungeon");
     }
-
-    public long getData( ){
-        return this.data;
-    }
-
-    public LongList next( ){
-        return this.next;
-    }
-
-    public void printNode( ){
-        System.out.print("LongList Node, data is : "+this.data);
-    }
+    
+    addRoom(Room room){
+        System.out.println("addRoom");
+        }
+    
+    addCreature(Creature creature){
+        System.out.println("addCreature");
+        }
+    
+    addPassage(Passage passage){
+        System.out.println("addPassage");
+        }
+    
+        addItem(Item item){
+        System.out.println("addItem");
+        }
 }
+    

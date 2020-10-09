@@ -3,7 +3,7 @@ public class Scroll extends Item{
     System.out.println("Scroll");
     }
     
-    public setID(int room,int serial){
+    public void setID(int room,int serial){
     System.out.println("setID");
     }
 }

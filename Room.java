@@ -1,15 +1,14 @@
 public class Room extends Structure{
-
-  public Room(string){
+  public Room(String string){
     System.out.println("Room");
-    }
+  }
     
-   public setId(int room){
+  public void setId(int room){
     System.out.println("setId");
-    }
+  }
     
-    public setCreature(Creature Monster){
+  public void setCreature(Creature Monster){
     System.out.println("setCreature");
-    }
+  }
 }
     

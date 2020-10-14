@@ -293,19 +293,20 @@ public class GameXMLHandler extends DefaultHandler {
 
     @Override
     public String toString() {
-        String str = "StudentsXMLHandler\n";
-        str += "   maxStudents: " + maxStudents + "\n";
-        str += "   studentCount: " + studentCount + "\n";
-        str += "   studentBeingParsed: " + studentBeingParsed.toString() + "\n";
-        str += "   activityBeingParsed: " + activityBeingParsed.toString() + "\n";
-        str += "   bInstructor: " + bInstructor + "\n";
-        str += "   bCredit: " + bInstructor + "\n";
-        str += "   bName: " + bInstructor + "\n";
-        str += "   bNumber: " + bInstructor + "\n";
-        str += "   bLocation: " + bInstructor + "\n";
-        str += "   bMeetingTime: " + bInstructor + "\n";
-        str += "   bMeetingDay: " + bInstructor + "\n";
+        String str = "GameXMLHandler\n";
+        str += "   bVisible: " + bVisible + "\n";
+        str += "   bPosX: " + bPosX + "\n";
+        str += "   bPosY: " + bPosY + "\n";
+        str += "   bWidth: " + bWidth + "\n";
+        str += "   bHeight: " + bHeight + "\n";
+        str += "   bType: " + bType + "\n";
+        str += "   bActionMessage: " + bActionMessage+ "\n";
+        str += "   bActionIntValue: " + bActionIntValue + "\n";
+        str += "   bActinCharValue: " + bActionCharValue + "\n";
+        str += "   bHp: " + bHp + "\n";
+        str += "   bHpMoves: " + bHpMoves + "\n";
+        str += "   bMaxHit: " + bMaxHit + "\n";
+        str += "   bItemIntValue: " + bItemIntValue + "\n";
         return str;
     }
 }
-

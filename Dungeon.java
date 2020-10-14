@@ -1,6 +1,6 @@
 public class Dungeon{
     
-    public void getDungeon(String name, int width, int gameHeight){
+    public static void getDungeon(String name, int width, int gameHeight){
         System.out.println("Get dungeon");
     }
     

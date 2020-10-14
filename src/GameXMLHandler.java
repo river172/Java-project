@@ -38,11 +38,11 @@ public class GameXMLHandler extends DefaultHandler {
 
     // Used by code outside the class to get the list of Student objects
     // that have been constructed.
-    public Student[] getDisplayable() {
+    public void getDisplayable() {
         return displayableStack;
     }
 
-    public Student[] getAction() {
+    public void getAction() {
         return actionsList;
     }
 

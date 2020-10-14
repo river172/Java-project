@@ -40,10 +40,15 @@ public class Test {
             saxParser.parse(new File(fileName), handler);
 	    // This will change depending on what kind of XML we are parsing
             Displayable<> displayable = handler.getDisplayable();
+		Action<> Action = handler.getAction();
 	    // print out all of the students.  This will change depending on 
 	    // what kind of XML we are parsing
             for (Displayable displayable : displayable) {
                 System.out.println(displayable);
+            }
+		
+	for (Action action : action) {
+                System.out.println(action);
             }
             /*
              * the above is a different form of 

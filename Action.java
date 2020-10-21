@@ -3,6 +3,10 @@ public class Action {
         System.out.println("setMessage");
     }
 
+    public void setCreature(CreatureAction creature){
+        System.out.println("Creature");
+    }
+
     public void setIntValue(int v){
         System.out.println("setIntValue");
     }

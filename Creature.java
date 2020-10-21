@@ -3,6 +3,10 @@ public class Creature extends Displayable{
   public Creature(){
     System.out.println("Creature");
   }
+  
+  public void setCreature(CreatureAction creature){
+    System.out.println("Creature");
+  }
 
   public void setHp(int h){
     System.out.println("setHp");

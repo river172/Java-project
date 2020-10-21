@@ -1,6 +1,7 @@
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+import java.util.*;
 
 public class GameXMLHandler extends DefaultHandler {
     private static final int DEBUG = 1;
@@ -10,6 +11,7 @@ public class GameXMLHandler extends DefaultHandler {
     private Stack<Action> actionsStack = new Stack<Action>();
     private Displayable displayableBeingParsed = null;
     private ItemAction actionBeingParsed = null;
+    private Dungeon dungeon;
 
     // The bX fields here indicate that at corresponding field is
     // having a value defined in the XML file.  In particular, a
@@ -38,12 +40,16 @@ public class GameXMLHandler extends DefaultHandler {
 
     // Used by code outside the class to get the list of Student objects
     // that have been constructed.
-    public Displayable[] getDisplayable() {
+    
+    public Displayable getDisplayable() {
         return displayableStack.pop();
     }
 
-    public Action[] getAction() {
+    public Action getAction() {
         return actionsStack.pop();
+    } 
+    public Dungeon getDungeon() {
+        return dungeon;
     }
 
     // A constructor for this class.  It makes an implicit call to the
@@ -75,14 +81,13 @@ public class GameXMLHandler extends DefaultHandler {
             int gameHeight = Integer.parseInt(attributes.getValue("gameHeight"));
             int bottomHeight = Integer.parseInt(attributes.getValue("bottomHeight")); 
             dungeon = new Dungeon();
-            dungeonGet = dungeon.getDungeon(name, width, gameHeight);
           
         } else if (qName.equalsIgnoreCase("Rooms")) {
             
         } else if (qName.equalsIgnoreCase("Room")) {
             String name = attributes.getValue("room");  
-            room = new Room(name);
-            push.displayableStack(room);
+            Room room = new Room(name);
+            displayableStack.push(room);
             
         } else if (qName.equalsIgnoreCase("visible")) {
             bVisible = true;
@@ -98,32 +103,38 @@ public class GameXMLHandler extends DefaultHandler {
             bType = true;
         } else if (qName.equalsIgnoreCase("Scroll")) {
             String name = attributes.getValue("name");
-            String room = attributes.getValue("room");
-            String serial = attributes.getValue("serial");
-            scroll = new Scroll(name);
+            int room = Integer.parseInt(attributes.getValue("room"));
+            int serial = Integer.parseInt(attributes.getValue("serial"));
+            Scroll scroll = new Scroll(name);
             scroll.setID(room, serial);
-            push.displayableStack(scroll);
+            displayableStack.push(scroll);
             
         } else if (qName.equalsIgnoreCase("ItemAction")) {
             String name = attributes.getValue("name");
-            String type = attributes.getValue("type");
+            Item item = (Item) displayableStack.peek();
+
+            // item = new Item();
             switch (name) {
                 case "BlessArmor":
-                    activity = new BlessArmor(type);     // what type? what input
-                    push.actionsStack(activity);
+                    BlessArmor blessArmor = new BlessArmor(item);     // what type? what input
+                    actionsStack.push(blessArmor);
+                    item.setItemAction(blessArmor);
+
                     break;
                 case "Hallucinate":
-                    activity = new Hallucinate(type);
-                    push.actionsStack(activity);
+                    Hallucinate hallucinate = new Hallucinate(item);
+                    actionsStack.push(hallucinate);
+                    item.setItemAction(hallucinate);
 
                     break;
                 case "BlessCurseOwner":
-                    activity = new BlessCurseOwner(type);
-                    push.actionsStack(activity);
+                    BlessCurseOwner blessCurseOwner = new BlessCurseOwner(item);
+                    actionsStack.push(blessCurseOwner);
+                    item.setItemAction(blessCurseOwner);
 
                     break;
                 default:
-                    System.out.println("Unknown activity: " + type);
+                    System.out.println("Unknown activity: " + name);
                     break;
             }
         } else if (qName.equalsIgnoreCase("actionMessage")) {
@@ -140,8 +151,8 @@ public class GameXMLHandler extends DefaultHandler {
             int room = Integer.parseInt(attributes.getValue("room"));  
             int serial = Integer.parseInt(attributes.getValue("serial"));  
           
-            player = new Player();                // what input ?
-            push.displayableStack(activity);
+            Player player = new Player();                // what input ?
+            displayableStack.push(player);
 
 
         } else if (qName.equalsIgnoreCase("hp")) {
@@ -154,37 +165,45 @@ public class GameXMLHandler extends DefaultHandler {
         } else if (qName.equalsIgnoreCase("CreatureAction")) {
             String name = attributes.getValue("name");
             String type = attributes.getValue("type");
+            Creature creature = (Creature) displayableStack.peek();
             switch (name) {
                 case "Teleport":
-                    activity = new Teleport(name,type);     // what type? what input
-                    push.actionsStack(activity);
+                    Teleport teleport = new Teleport(name, creature);     // what type? what input
+                    creature.setCreature(teleport);
+                    actionsStack.push(teleport);
 
                     break;
                 case "Remove":
-                    activity = new Remove(name,type);
-                    push.actionsStack(activity);
+                    Remove remove = new Remove(name, creature);
+                    creature.setCreature(remove);
+                    actionsStack.push(remove);
 
                     break;
                 case "ChangedDisplayedType":
-                    activity = new ChangedDgetisplayedType(name,type);
-                    push.actionsStack(activity);        
+                    ChangedDisplayedType changedDisplayedType = new ChangedDisplayedType(name,creature);
+                    creature.setCreature(changedDisplayedType);
+                    actionsStack.push(changedDisplayedType);        
 
                     break;
                 case "DropPack":
-                    activity = new DropPack(name,type);     // what type? what input
-                    push.actionsStack(activity);
+                    DropPack dropPack = new DropPack(name, creature);     // what type? what input
+                    creature.setCreature(dropPack);
+                    actionsStack.push(dropPack);
                     break;
                 case "YouWin":
-                    activity = new YouWin(name,type);
-                    push.actionsStack(activity);
+                    YouWin youWin = new YouWin(name, creature);
+                    creature.setCreature(youWin);
+                    actionsStack.push(youWin);
                     break;
                 case "EndGame":
-                    activity = new EndGame(name,type);
-                    push.actionsStack(activity);
+                    EndGame endGame = new EndGame(name, creature);
+                    creature.setCreature(endGame);
+                    actionsStack.push(endGame);
                     break;
                 case "UpdateDisplay":
-                    activity = new UpdateDisplay(name,type);
-                    push.actionsStack(activity);
+                    UpdateDisplay update = new UpdateDisplay(name, creature);
+                    creature.setCreature(update);
+                    actionsStack.push(update);
                     break;
                 default:
                     System.out.println("Unknown activity: " + type);
@@ -195,8 +214,8 @@ public class GameXMLHandler extends DefaultHandler {
             String name = attributes.getValue("name");
             int room = Integer.parseInt(attributes.getValue("room"));  
             int serial = Integer.parseInt(attributes.getValue("serial"));
-            sword = new Sword(name);
-            push.displayableStack(sword);
+            Sword sword = new Sword(name);
+            displayableStack.push(sword);
             
             sword.setID(room,serial);
         
@@ -204,8 +223,8 @@ public class GameXMLHandler extends DefaultHandler {
             String name = attributes.getValue("name");
             int room = Integer.parseInt(attributes.getValue("room"));  
             int serial = Integer.parseInt(attributes.getValue("serial"));
-            monster = new Monster();
-            push.displayableStack(monster);
+            Monster monster = new Monster();
+            displayableStack.push(monster);
 
             monster.setName(name);
             monster.setID(room,serial);
@@ -217,19 +236,19 @@ public class GameXMLHandler extends DefaultHandler {
             String name = attributes.getValue("name");
             int room = Integer.parseInt(attributes.getValue("room"));  
             int serial = Integer.parseInt(attributes.getValue("serial"));
-            armor = new Armor(name);
+            Armor armor = new Armor(name);
             armor.setName(name);
             armor.setID(room, serial);
-            push.displayableStack(armor);
+            displayableStack.push(armor);
 
           
         } else if (qName.equalsIgnoreCase("Passage")) {
             int room1 = Integer.parseInt(attributes.getValue("room1"));  
             int room2 = Integer.parseInt(attributes.getValue("room2"));
-            passage = new Passage(name);
-            passage.setName(name);
+            Passage passage = new Passage();
+            passage.setName("name");
             passage.setID(room1, room2);
-            push.displayableStack(passage);
+            displayableStack.push(passage);
           
         } else {
             System.out.println("Unknown qname: " + qName);
@@ -241,7 +260,7 @@ public class GameXMLHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if (bVisible) {
-            displayableStack.peek().setVisible(Integer.parseInt(data.toString()));
+            displayableStack.peek().setVisible();
             bVisible = false;
         } else if (bPosX) {
             displayableStack.peek().setPosX(Integer.parseInt(data.toString()));
@@ -256,28 +275,28 @@ public class GameXMLHandler extends DefaultHandler {
             displayableStack.peek().setHeight(Integer.parseInt(data.toString()));
             bHeight = false;
         } else if (bType) {
-            displayableStack.peek().setType(Integer.parseInt(data.toString()));
+            // displayableStack.peek().setType(Integer.parseInt(data.toString()));
             bType = false;
         } else if (bActionMessage) {
-            displayableStack.peek().setActionMessage(Integer.parseInt(data.toString()));
+            // displayableStack.peek().setActionMessage("7");
             bActionMessage = false;
         }else if (bActionIntValue) {
-            displayableStack.peek().setActionIntValue(Integer.parseInt(data.toString()));
+            // displayableStack.peek().setActionIntValue(Integer.parseInt(data.toString()));
             bActionIntValue = false;
         } else if (bActionCharValue) {
-            displayableStack.peek().setActionCharValue(Integer.parseInt(data.toString()));
+            // displayableStack.peek().setActionCharValue(Integer.parseInt(data.toString()));
             bActionCharValue = false;
         } else if (bHp) {
             displayableStack.peek().setHp(Integer.parseInt(data.toString()));
             bHp = false;
         } else if (bHpMoves) {
-            displayableStack.peek().setHpMoves(Integer.parseInt(data.toString()));
+            // displayableStack.peek().setHpMoves(Integer.parseInt(data.toString()));
             bHpMoves = false;
         } else if (bMaxHit) {
             displayableStack.peek().setMaxHit(Integer.parseInt(data.toString()));
             bMaxHit = false;
         } else {
-            displayableStack.peek().setIntValue(Integer.parseInt(data.toString()));
+            // displayableStack.peek().setIntValue(Integer.parseInt(data.toString()));
             bItemIntValue = false;
         }
     }
@@ -293,19 +312,21 @@ public class GameXMLHandler extends DefaultHandler {
 
     @Override
     public String toString() {
+        /*
         String str = "StudentsXMLHandler\n";
-        str += "   maxStudents: " + maxStudents + "\n";
-        str += "   studentCount: " + studentCount + "\n";
-        str += "   studentBeingParsed: " + studentBeingParsed.toString() + "\n";
-        str += "   activityBeingParsed: " + activityBeingParsed.toString() + "\n";
-        str += "   bInstructor: " + bInstructor + "\n";
-        str += "   bCredit: " + bInstructor + "\n";
-        str += "   bName: " + bInstructor + "\n";
-        str += "   bNumber: " + bInstructor + "\n";
-        str += "   bLocation: " + bInstructor + "\n";
-        str += "   bMeetingTime: " + bInstructor + "\n";
-        str += "   bMeetingDay: " + bInstructor + "\n";
-        return str;
+        str += "   maxStudents: " + passage + "\n";
+        str += "   studentCount: " + passage + "\n";
+        str += "   studentBeingParsed: " + passage.toString() + "\n";
+        str += "   activityBeingParsed: " + passage.toString() + "\n";
+        str += "   bInstructor: " + passage + "\n";
+        str += "   bCredit: " + passage + "\n";
+        str += "   bName: " + passage + "\n";
+        str += "   bNumber: " + passage + "\n";
+        str += "   bLocation: " + passage + "\n";
+        str += "   bMeetingTime: " + passage + "\n";
+        str += "   bMeetingDay: " + passage + "\n";
+        */
+        return "str"; 
     }
 }
 

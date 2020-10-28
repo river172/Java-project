@@ -62,6 +62,7 @@ public class Displayable{
   }
   
   public void setPosX(int x){
+    posX = x;
   System.out.println("setPosX");
   }
 
@@ -70,6 +71,7 @@ public class Displayable{
   }
   
   public void setPosY(int y){
+    posY = y;
   System.out.println("setPosY");
   }
 
@@ -78,6 +80,7 @@ public class Displayable{
   }
   
   public void setWidth(int x){
+    width = x;
   System.out.println("setWidth");
   }
 
@@ -86,6 +89,7 @@ public class Displayable{
   }
   
   public void setHeight(int y){
+    height = y;
   System.out.println("setHeight");
   }
 

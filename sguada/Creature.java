@@ -18,6 +18,7 @@ public class Creature extends Displayable{
   }
 
   public void setHp(int h){
+    hp = h;
     System.out.println("setHp");
   }
 
@@ -26,6 +27,7 @@ public class Creature extends Displayable{
   }
 
   public void setHpMoves(int hpm){
+    hpMoves = hpm;
     System.out.println("setHpMoves");
   }
 
@@ -34,6 +36,7 @@ public class Creature extends Displayable{
   }
   
   public void setDeathAction(CreatureAction da){
+    deathAction = da;
     System.out.println("setDeathAction");
   }
 
@@ -42,6 +45,7 @@ public class Creature extends Displayable{
   }
 
   public void setHitAction(CreatureAction ha){
+    hitAction = ha;
     System.out.println("setHHitAction");
   }
   

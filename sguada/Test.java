@@ -6,6 +6,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
+import java.util.*;
 
 public class Test {
 
@@ -40,16 +41,13 @@ public class Test {
 	    // just copy this.  This will parse the xml file given by fileName
             saxParser.parse(new File(fileName), handler);
 	    // This will change depending on what kind of XML we are parsing
-            Displayable [] displayables = handler.getDisplayable();
-            Action [] actions = handler.getAction();
+            Dungeon dungeon = handler.getDungeon();
+            //Stack <Displayable> displayables = handler.getDisplayable();
 	    // print out all of the students.  This will change depending on 
 	    // what kind of XML we are parsing
-            for (Displayable displayable : displayables) {
-                System.out.println(displayable);
-            }
-            for (Action action : actions) {
-                System.out.println(action);
-            }
+            //for (Displayable displayable : dungeon) {
+            System.out.println(dungeon);
+            //}
             /*
              * the above is a different form of 
              for (int i = 0; i < students.length; i++) {

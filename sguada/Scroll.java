@@ -6,6 +6,7 @@ public class Scroll extends Item{
   public void setID(int room,int serial){
     System.out.println("setID");
   }
+
 }
 
   

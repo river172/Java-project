@@ -1,31 +1,33 @@
+import java.util.ArrayList;
 public class Dungeon{
-    private Room _room;
-    private Creature _creature;
-    private Passage _passage;
-    private Item _item;
-    
+   
+    private ArrayList<Room> Rooms = new ArrayList<Room>();
+    private ArrayList<Creature> creatures = new ArrayList<Creature>();
+    private ArrayList<Passage> passages = new ArrayList<Passage>();
+    private ArrayList<Item> items = new ArrayList<Itemm>();
     public static void getDungeon(String name, int width, int gameHeight){
         System.out.println("Get dungeon");
     }
     
     public void addRoom(Room room){
-        _room = room;
+        Rooms.add(Room);
         System.out.println("addRoom");
     }
     
     public void addCreature(Creature creature){
-        _creature = creature;
+        creatures.add(creature);
         System.out.println("addCreature");
     }
     
     public void addPassage(Passage passage){
-        _passage = passage;
+        passages.add(passage);
         System.out.println("addPassage");
     }
     
     public void addItem(Item item){
-        _tem = item;
+        items.add(item);
         System.out.println("addItem");
     }
 }
     
+ 
